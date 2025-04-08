@@ -72,6 +72,8 @@ Types "dress" into the search bar.
 
 Submits the search.
 
+https://github.com/Chennojipriyanka/SeleniumAssignment/blob/master/README.md#video-walkthrough
+
 2️⃣ LoginPage.java – Amazon Login
 java
 Copy
