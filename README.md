@@ -59,7 +59,7 @@ Edit
 
 #### Code Explanation
 
-1️⃣ HomePage.java – Product Search on Amazon
+1️ HomePage.java – Product Search on Amazon
 java
 Copy
 Edit
@@ -72,9 +72,7 @@ Types "dress" into the search bar.
 
 Submits the search.
 
-https://github.com/Chennojipriyanka/SeleniumAssignment/blob/master/README.md#video-walkthrough
-
-2️⃣ LoginPage.java – Amazon Login
+2️ LoginPage.java – Amazon Login
 java
 Copy
 Edit
@@ -89,6 +87,27 @@ Opens Amazon login page.
 Enters mobile number and password.
 
 Clicks on Sign In button.
+
+3 ProductPage.java - Amazon add to cart
+driver.get("https://www.amazon.in/");
+		driver.findElement(By.id("twotabsearchtextbox")).sendKeys("dress");
+		driver.findElement(By.id("nav-search-submit-button")).click();
+String parentWindow = driver.getWindowHandle();
+driver.findElement(By.className("s-image")).click();
+Set<String> allWindows = driver.getWindowHandles();
+		for (String windowHandle : allWindows) {
+			if (!windowHandle.equals(parentWindow)) {
+				driver.switchTo().window(windowHandle);
+				break;
+			}
+		}
+		Thread.sleep(3000); 
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,500)", "");
+		driver.findElement(By.id("add-to-cart-button")).click();
+		System.out.println("Added to cart successfully");
+
+
 
 #### video walkthrough
 https://github.com/user-attachments/assets/24280252-4e5c-497d-9049-848a642b513e
