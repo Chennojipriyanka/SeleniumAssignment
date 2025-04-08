@@ -10,6 +10,8 @@ This project demonstrates Selenium WebDriver automation for testing **Login** an
 |--------------------|-----------------------------------------------------------------------------|
 | 🔐 Login Test       | Automates login using a mobile number and password.                         |
 | 🔍 Search Test      | Searches for a product (e.g., "dress") and verifies that search executes.   |
+| 🔍 add to cart Test | Searches for a product, add to cart and verifies that product gets added to cart|
+
 
 ---
 
