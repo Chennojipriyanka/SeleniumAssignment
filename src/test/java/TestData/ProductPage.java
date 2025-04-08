@@ -1,44 +1,57 @@
 package TestData;
 
 import java.time.Duration;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductPage {
 
 	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\admin\\Downloads\\chromedriver_win32\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",
+				"C:\\Users\\admin\\Downloads\\chromedriver_win32\\chromedriver.exe");
 
 		WebDriver driver = new ChromeDriver();
 
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		
 		driver.get("https://www.amazon.in/");
-		 WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("twotabsearchtextbox")));
-	        searchBox.sendKeys("dress");
+		driver.findElement(By.id("twotabsearchtextbox")).sendKeys("dress");
+		driver.findElement(By.id("nav-search-submit-button")).click();
 
-	        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-search-submit-button")));
-	        searchButton.click();
+		
+		String parentWindow = driver.getWindowHandle();
 
-	        
-	        WebElement firstProduct = wait.until(ExpectedConditions.elementToBeClickable(By.className("s-image")));
-	        firstProduct.click();
+		
+		driver.findElement(By.className("s-image")).click();
 
-	        WebElement addToCartBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-to-cart-button")));
-	        JavascriptExecutor js = (JavascriptExecutor) driver;
-	        js.executeScript("arguments[0].scrollIntoView(true);", addToCartBtn);
+		
+		Set<String> allWindows = driver.getWindowHandles();
+		for (String windowHandle : allWindows) {
+			if (!windowHandle.equals(parentWindow)) {
+				driver.switchTo().window(windowHandle);
+				break;
+			}
+		}
 
-	      
-	        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn)).click();
+		Thread.sleep(3000); 
+
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,500)", "");
+
+		
+		driver.findElement(By.id("add-to-cart-button")).click();
+
+		System.out.println("Added to cart successfully");
+
+		Thread.sleep(3000);
+		driver.quit();
 
 	}
 
